@@ -1,0 +1,28 @@
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.7.0 <0.9.0;
+
+contract time{
+    function getTime() public view returns (uint){
+        //This will return seconds since Jan 1 1970, how many seconds has passed since this date
+        
+        return block.timestamp - 1 days;
+                               //1 seconds
+                               //1 minutes
+                               //1 hours
+                               //1 days
+                               //1 weeks we can subtract any of these units
+    
+    }
+
+// This will work one minute after deplyment
+    uint expiry;
+    uint count;
+    constructor() {
+        expiry = block.timestamp + 1 minutes;
+    }
+
+    function addOne() public{
+        require(block.timestamp < expiry);
+        count++;
+    }
+}
