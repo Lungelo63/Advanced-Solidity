@@ -1,0 +1,34 @@
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.7.0 <0.9.0;
+
+contract structs{
+    mapping(address => Person) people;
+    
+    struct Person{
+        string name;
+        address addr;
+        uint balance;
+        Person[] friends;
+    }
+
+    function createPerson(string memory name) public payable{
+        //structs are stored in memory
+        people[msg.sender].addr = msg.sender;
+        people[msg.sender].name = name;
+           
+    }
+
+    function addFriend(address friend) public {
+        require(people[friend].addr != address(0), "Friend has not set his name");
+        people[msg.sender].friends.push(people[friend]);
+    }
+
+    function getFriendNmaes() public view returns (string[] memory) {
+        uint numNames = people[msg.sender].friends.length;
+        string[] memory names = new string[] (numNames);
+        for (uint idx; idx < numNames; idx++){
+            names[idx] = people[msg.sender].friends[idx].name;
+        }
+        return names;
+    }
+}
